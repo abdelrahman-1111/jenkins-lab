@@ -5,18 +5,18 @@ jenkins:
       users:
         - id : admin
           password: "admin"
-  authorizationStratigy:
+  authorizationStrategy:
     globalMatrix:
-      persmissions:
+      permissions:
         - "Overall/Administer:admin"
         - "Overall/Read:authenticated"
-  credentials:
-    system:
-      domainCredentials:
-        - credentials:
-          - usernamePassword:
-              id : test123
-              username: admin
-              password: admintoken
-              description: "the admin credential"
-              scope: GLOBAL
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - usernamePassword:
+            id : test123
+            username: admin
+            password: admintoken
+            description: "the admin credential"
+            scope: GLOBAL
