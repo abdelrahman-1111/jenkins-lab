@@ -1,0 +1,34 @@
+FROM ubuntu:latest
+
+USER root
+# install openssh-server openjdk8
+RUN apt-get update -y && apt-get install -y openjdk-8-jdk openssh-server
+
+RUN useradd -m -s /bin/bash jenkins
+COPY key.pub /home/jenkins/.ssh/authorized_keys
+RUN chown -R jenkins:jenkins /home/jenkins/.ssh
+RUN chmod 700 /home/jenkins/.ssh
+RUN chmod 644 /home/jenkins/.ssh/authorized_keys
+
+USER jenkins
+RUN mkdir /home/jenkins/jenkins_home
+WORKDIR /home/jenkins/jenkins_home
+# RUN chmod 644 /home/jenkins/.ssh/authorized_keys
+USER root
+ENTRYPOINT service ssh restart && bash
+
+# FROM ubuntu:latest
+# USER root
+# RUN mkdir -p jenkins_home
+# RUN chmod 777 jenkins_home
+# RUN apt-get update -qq
+# RUN apt install -y openjdk-8-jdk
+# RUN apt-get install -y openssh-server
+# RUN useradd -ms /bin/bash jenkins
+# COPY key.pub /home/jenkins/.ssh/authorized_keys 
+# RUN chown jenkins:jenkins -R /home/jenkins/.ssh/ && \
+#     chmod 600 /home/jenkins/.ssh/authorized_keys && \
+#     chmod 700 /home/jenkins/.ssh
+# USER jenkins
+# WORKDIR jenkins_home
+# ENTRYPOINT service ssh restart && bash
